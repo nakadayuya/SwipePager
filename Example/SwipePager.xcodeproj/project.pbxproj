@@ -13,6 +13,7 @@
 		5C8B34AE1AE39FF4005FAA79 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C8B34AD1AE39FF4005FAA79 /* Images.xcassets */; };
 		5C8B34B11AE39FF4005FAA79 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C8B34AF1AE39FF4005FAA79 /* LaunchScreen.xib */; };
 		5C8B34BD1AE39FF4005FAA79 /* SwipePagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B34BC1AE39FF4005FAA79 /* SwipePagerTests.swift */; };
+		5C8B34C81AE3A326005FAA79 /* SwipePager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8B34C71AE3A326005FAA79 /* SwipePager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		5C8B34B61AE39FF4005FAA79 /* SwipePagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwipePagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C8B34BB1AE39FF4005FAA79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C8B34BC1AE39FF4005FAA79 /* SwipePagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipePagerTests.swift; sourceTree = "<group>"; };
+		5C8B34C71AE3A326005FAA79 /* SwipePager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipePager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		5C8B34981AE39FF4005FAA79 = {
 			isa = PBXGroup;
 			children = (
+				5C8B34C61AE3A2EC005FAA79 /* Source */,
 				5C8B34A31AE39FF4005FAA79 /* SwipePager */,
 				5C8B34B91AE39FF4005FAA79 /* SwipePagerTests */,
 				5C8B34A21AE39FF4005FAA79 /* Products */,
@@ -110,6 +113,15 @@
 				5C8B34BB1AE39FF4005FAA79 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5C8B34C61AE3A2EC005FAA79 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5C8B34C71AE3A326005FAA79 /* SwipePager.swift */,
+			);
+			name = Source;
+			path = ../Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +226,7 @@
 			files = (
 				5C8B34A91AE39FF4005FAA79 /* ViewController.swift in Sources */,
 				5C8B34A71AE39FF4005FAA79 /* AppDelegate.swift in Sources */,
+				5C8B34C81AE3A326005FAA79 /* SwipePager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +418,7 @@
 				5C8B34C21AE39FF4005FAA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5C8B34C31AE39FF4005FAA79 /* Build configuration list for PBXNativeTarget "SwipePagerTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +427,7 @@
 				5C8B34C51AE39FF4005FAA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
