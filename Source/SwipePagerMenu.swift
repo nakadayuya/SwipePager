@@ -43,7 +43,7 @@ class SwipePagerMenu: UIView {
     
     // MARK: - Public
     
-    func load() {
+    func config() {
         if let title = self.title {
             self.titelLabel.text = title
         }
