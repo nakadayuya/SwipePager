@@ -18,6 +18,7 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Sample"
         
         if let height = self.navigationController?.navigationBar.frame.height {
             ORIGIN_Y += height
