@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  ContainerViewController.swift
 //  SwipePager
 //
-//  Created by naoto yamaguchi on 2015/04/19.
+//  Created by naoto yamaguchi on 2015/04/23.
 //  Copyright (c) 2015年 naoto yamaguchi. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate {
+class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate {
     
     // MARK: - Property
     
@@ -16,11 +16,9 @@ class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
     
     var ORIGIN_Y: CGFloat = CGRectGetHeight(UIApplication.sharedApplication().statusBarFrame)
     
-    // MARK: - LifeCyycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         if let height = self.navigationController?.navigationBar.frame.height {
             ORIGIN_Y += height
         }
@@ -79,7 +77,7 @@ class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
         for var i = 0; i < 8; i++ {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             let feedVC =
-                storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
+            storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
             
             if i == 0 { feedVC.view.backgroundColor = UIColor.whiteColor() }
             if i == 1 { feedVC.view.backgroundColor = UIColor.grayColor() }
@@ -101,6 +99,15 @@ class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
     func swipePager(#swipePager: SwipePager, didMoveToPage: Int) {
         println("move to \(didMoveToPage.description)")
     }
-    
-}
 
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
