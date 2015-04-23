@@ -51,21 +51,24 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
         return CGSizeMake(80, 50)
     }
     
-    func menuViews(#swipePager: SwipePager) -> [UIView] {
-        var array: [UIView] = []
+    func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu] {
+        var array: [SwipePagerMenu] = []
         
         for var i = 0; i < 8; i++ {
-            let menuView = UIView(frame: CGRectMake(0, 0, 80, 50))
-            if i == 0 { menuView.backgroundColor = UIColor.whiteColor() }
-            if i == 1 { menuView.backgroundColor = UIColor.grayColor() }
-            if i == 2 { menuView.backgroundColor = UIColor.redColor() }
-            if i == 3 { menuView.backgroundColor = UIColor.greenColor() }
-            if i == 4 { menuView.backgroundColor = UIColor.blueColor() }
-            if i == 5 { menuView.backgroundColor = UIColor.cyanColor() }
-            if i == 6 { menuView.backgroundColor = UIColor.yellowColor() }
-            if i == 7 { menuView.backgroundColor = UIColor.magentaColor() }
-            
-            array.append(menuView)
+            var menu = SwipePagerMenu()
+            menu.stateNormalColor = UIColor.lightGrayColor()
+            menu.stateNormalFontColor = UIColor.whiteColor()
+            menu.stateHighlightColor = UIColor.blackColor()
+            menu.stateHighlightFontColor = UIColor.whiteColor()
+            if i == 0 { menu.title = "1番目" }
+            if i == 1 { menu.title = "2番目" }
+            if i == 2 { menu.title = "3番目" }
+            if i == 3 { menu.title = "4番目" }
+            if i == 4 { menu.title = "5番目" }
+            if i == 5 { menu.title = "6番目" }
+            if i == 6 { menu.title = "7番目" }
+            if i == 7 { menu.title = "8番目" }
+            array.append(menu)
         }
         
         return array
@@ -76,8 +79,7 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
         
         for var i = 0; i < 8; i++ {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let feedVC =
-            storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
+            let feedVC = storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
             
             if i == 0 { feedVC.view.backgroundColor = UIColor.whiteColor() }
             if i == 1 { feedVC.view.backgroundColor = UIColor.grayColor() }
