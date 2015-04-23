@@ -199,10 +199,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             CGRectGetHeight(self.menuScrollView.frame)
         )
         self.menuScrollView.scrollRectToVisible(frame, animated: true)
+        self.menuHighLight(index)
     }
     
     private func didMoveToPage() {
-        self.menuHighLight(self.currentPage)
         self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentPage)
     }
     
@@ -268,8 +268,6 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
                 let viewController = viewControllers[0] as UIViewController
                 self.currentPage = self.indexOfViewController(viewController)
             }
-            
-            self.moveMenuScrollViewToCurrentPage(self.currentPage)
     }
     
     public func pageViewController(
@@ -277,7 +275,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         didFinishAnimating finished: Bool,
         previousViewControllers: [AnyObject],
         transitionCompleted completed: Bool) {
-            self.didMoveToPage()
+            if completed == true {
+                self.moveMenuScrollViewToCurrentPage(self.currentPage)
+                self.didMoveToPage()
+            }
     }
     
 }
