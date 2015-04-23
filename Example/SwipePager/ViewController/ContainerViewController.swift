@@ -12,8 +12,6 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
     
     // MARK: - Property
     
-    var navH: CGFloat = 44.0
-    
     var ORIGIN_Y: CGFloat = CGRectGetHeight(UIApplication.sharedApplication().statusBarFrame)
     
     override func viewDidLoad() {
@@ -23,7 +21,7 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
         if let height = self.navigationController?.navigationBar.frame.height {
             ORIGIN_Y += height
         }
-        let statusBarH = UIApplication.sharedApplication().statusBarFrame.height
+        
         let frame = CGRectMake(
             0,
             ORIGIN_Y,
