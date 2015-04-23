@@ -60,14 +60,14 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
             menu.stateNormalFontColor = UIColor.whiteColor()
             menu.stateHighlightColor = UIColor.blackColor()
             menu.stateHighlightFontColor = UIColor.whiteColor()
-            if i == 0 { menu.title = "1番目" }
-            if i == 1 { menu.title = "2番目" }
-            if i == 2 { menu.title = "3番目" }
-            if i == 3 { menu.title = "4番目" }
-            if i == 4 { menu.title = "5番目" }
-            if i == 5 { menu.title = "6番目" }
-            if i == 6 { menu.title = "7番目" }
-            if i == 7 { menu.title = "8番目" }
+            if i == 0 { menu.title = "0" }
+            if i == 1 { menu.title = "1" }
+            if i == 2 { menu.title = "2" }
+            if i == 3 { menu.title = "3" }
+            if i == 4 { menu.title = "4" }
+            if i == 5 { menu.title = "5" }
+            if i == 6 { menu.title = "6" }
+            if i == 7 { menu.title = "7" }
             array.append(menu)
         }
         
@@ -79,18 +79,9 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
         
         for var i = 0; i < 8; i++ {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let feedVC = storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
-            
-            if i == 0 { feedVC.view.backgroundColor = UIColor.whiteColor() }
-            if i == 1 { feedVC.view.backgroundColor = UIColor.grayColor() }
-            if i == 2 { feedVC.view.backgroundColor = UIColor.redColor() }
-            if i == 3 { feedVC.view.backgroundColor = UIColor.greenColor() }
-            if i == 4 { feedVC.view.backgroundColor = UIColor.blueColor() }
-            if i == 5 { feedVC.view.backgroundColor = UIColor.cyanColor() }
-            if i == 6 { feedVC.view.backgroundColor = UIColor.yellowColor() }
-            if i == 7 { feedVC.view.backgroundColor = UIColor.magentaColor() }
-            
-            array.append(feedVC)
+            let feedViewController = storyBoard.instantiateViewControllerWithIdentifier("FeedViewController") as FeedViewController
+            feedViewController.row = i
+            array.append(feedViewController)
         }
         
         return array

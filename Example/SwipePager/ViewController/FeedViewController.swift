@@ -13,6 +13,7 @@ class FeedViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Property
     
     @IBOutlet weak var tableView: UITableView!
+    var row: Int = Int()
     
     // MARK: - LifeCycle
     
@@ -42,7 +43,7 @@ class FeedViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
-        cell.textLabel?.text = indexPath.row.description
+        cell.textLabel?.text = "Sample" + " " + self.row.description
         return cell
     }
     
