@@ -44,28 +44,12 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     var dataSource: SwipePagerDataSource?
     var delegate: SwipePagerDelegate?
     var transitionStyle: UIPageViewControllerTransitionStyle!
-    var currentIndex: Int = 0 {
-        didSet {
-            var correct = true
-            
-            if self.currentIndex >= self.dataSource?.menuViews(swipePager: self).count {
-                correct = false
-            }
-            
-            if self.currentIndex >= self.dataSource?.viewControllers(swipePager: self).count {
-                correct = false
-            }
-            
-            if correct == false {
-                self.currentIndex = 0
-            }
-        }
-    }
+    var currentPage: Int = 0
     
     private var menuScrollView: UIScrollView = UIScrollView()
     private var menuViewArray: [SwipePagerMenu] = []
     private var menuSize: CGSize = CGSizeZero
-    private var currentPage: Int = 0
+    private var currentIndex: Int = 0
     private var pageViewController: UIPageViewController = UIPageViewController()
     private var viewControllers: [UIViewController] = []
     
@@ -88,6 +72,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     // MARK: - Public
     
     func reloadData() {
+        self.settingCurrentPage()
         self.menuScrollViewReloadData()
         self.pageViewControllerReloadData()
     }
@@ -127,10 +112,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             self.menuSize.height
         )
         
-        self.layoutMenuScrollView(currentIndex: self.currentIndex)
+        self.layoutMenuScrollView(currentPage: self.currentPage)
     }
     
-    private func layoutMenuScrollView(#currentIndex: Int) {
+    private func layoutMenuScrollView(#currentPage: Int) {
         var index: Int = 0
         
         if let menuViewArray = self.dataSource?.menuViews(swipePager: self) {
@@ -159,7 +144,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             self.menuSize.height
         )
         
-        self.moveMenuScrollViewToCurrentPage(currentIndex)
+        self.moveMenuScrollViewToCurrentIndex(currentPage)
     }
     
     private func pageViewControllerReloadData() {
@@ -176,7 +161,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             
             if self.viewControllers.count > 0 {
                 self.pageViewController.setViewControllers(
-                    [self.viewControllers[self.currentIndex]],
+                    [self.viewControllers[self.currentPage]],
                     direction: .Forward,
                     animated: true,
                     completion: nil
@@ -191,10 +176,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         if let index = gesture.view?.tag {
             var direction: UIPageViewControllerNavigationDirection?
             
-            if self.currentPage > index {
+            if self.currentIndex > index {
                 direction = .Reverse
             }
-            else if self.currentPage < index {
+            else if self.currentIndex < index {
                 direction = .Forward
             }
             
@@ -211,12 +196,12 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
                 )
             }
             
-            self.currentPage = index
-            self.moveMenuScrollViewToCurrentPage(index)
+            self.currentIndex = index
+            self.moveMenuScrollViewToCurrentIndex(index)
         }
     }
     
-    private func moveMenuScrollViewToCurrentPage(index: Int) {
+    private func moveMenuScrollViewToCurrentIndex(index: Int) {
         let frame = CGRectMake(
             CGFloat(index) * self.menuSize.width + self.menuSize.width / 2 - (CGRectGetWidth(self.frame) / 2), // TODO: 確認
             0,
@@ -224,7 +209,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             CGRectGetHeight(self.menuScrollView.frame)
         )
         self.menuScrollView.scrollRectToVisible(frame, animated: true)
-        self.menuHighlight(index)
+        self.menuHighlight(index: index)
     }
     
     private func indexOfViewController(viewController: UIViewController) -> Int {
@@ -236,7 +221,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         return NSNotFound
     }
     
-    private func menuHighlight(index: Int) {
+    private func menuHighlight(#index: Int) {
         for var i = 0; i < self.menuViewArray.count; i++ {
             let menu = self.menuViewArray[i] as SwipePagerMenu
             menu.stateNormal()
@@ -247,8 +232,24 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         }
     }
     
+    private func settingCurrentPage() {
+        var correct = true
+        
+        if self.currentPage >= self.dataSource?.menuViews(swipePager: self).count {
+            correct = false
+        }
+        
+        if self.currentPage >= self.dataSource?.viewControllers(swipePager: self).count {
+            correct = false
+        }
+        
+        if correct == false {
+            self.currentPage = 0
+        }
+    }
+    
     private func didMoveToPage() {
-        self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentPage)
+        self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentIndex)
     }
     
     // MARK: - UIPageViewControllerDataSource
@@ -300,7 +301,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             if pendingViewControllers.count > 0 {
                 let viewControllers = pendingViewControllers as [UIViewController]
                 let viewController = viewControllers[0] as UIViewController
-                self.currentPage = self.indexOfViewController(viewController)
+                self.currentIndex = self.indexOfViewController(viewController)
             }
     }
     
@@ -310,7 +311,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         previousViewControllers: [AnyObject],
         transitionCompleted completed: Bool) {
             if completed == true {
-                self.moveMenuScrollViewToCurrentPage(self.currentPage)
+                self.moveMenuScrollViewToCurrentIndex(self.currentIndex)
                 self.didMoveToPage()
             }
     }
