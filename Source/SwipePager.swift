@@ -33,7 +33,7 @@ protocol SwipePagerDataSource {
 }
 
 protocol SwipePagerDelegate {
-    func swipePager(#swipePager: SwipePager, didMoveToPage: Int)
+    func swipePager(#swipePager: SwipePager, didMoveToPage page: Int)
 }
 
 public class SwipePager: UIView, UIPageViewControllerDataSource,

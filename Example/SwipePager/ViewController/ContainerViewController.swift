@@ -103,8 +103,8 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
     
     // MARK: - SwipePagerDelegate
     
-    func swipePager(#swipePager: SwipePager, didMoveToPage: Int) {
-        println("move to \(didMoveToPage.description)")
+    func swipePager(#swipePager: SwipePager, didMoveToPage page: Int) {
+        println("move to :" + page.description)
     }
 
     /*
