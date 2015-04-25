@@ -26,7 +26,7 @@
 
 import UIKit
 
-class SwipePagerMenu: UIView {
+public class SwipePagerMenu: UIView {
     
     // MARK: - Property
     
@@ -39,7 +39,7 @@ class SwipePagerMenu: UIView {
     
     private var titelLabel: UILabel = UILabel()
     
-    override var frame: CGRect {
+    override public var frame: CGRect {
         didSet {
             self.titelLabel.frame = CGRectMake(
                 0,
@@ -52,7 +52,7 @@ class SwipePagerMenu: UIView {
     
     // MARK: - LifeCycle
     
-    override init() {
+    override required public init() {
         super.init(frame: CGRectZero)
         self.titelLabel = UILabel()
         self.titelLabel.backgroundColor = UIColor.clearColor()
@@ -60,7 +60,7 @@ class SwipePagerMenu: UIView {
         self.addSubview(self.titelLabel)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

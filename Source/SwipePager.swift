@@ -56,7 +56,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     
     // MARK: - LifeCycle
     
-    init(frame: CGRect, transitionStyle: UIPageViewControllerTransitionStyle) {
+    required public init(frame: CGRect, transitionStyle: UIPageViewControllerTransitionStyle) {
         super.init(frame: frame)
         self.transitionStyle = transitionStyle
         self.initializeView()
@@ -72,7 +72,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     
     // MARK: - Public
     
-    func reloadData() {
+    public func reloadData() {
         self.settingCurrentPage()
         self.menuScrollViewReloadData()
         self.pageViewControllerReloadData()
