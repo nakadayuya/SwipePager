@@ -44,7 +44,23 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     var dataSource: SwipePagerDataSource?
     var delegate: SwipePagerDelegate?
     var transitionStyle: UIPageViewControllerTransitionStyle!
-    var currentIndex: Int?
+    var currentIndex: Int = 0 {
+        didSet {
+            var correct = true
+            
+            if self.currentIndex >= self.dataSource?.menuViews(swipePager: self).count {
+                correct = false
+            }
+            
+            if self.currentIndex >= self.dataSource?.viewControllers(swipePager: self).count {
+                correct = false
+            }
+            
+            if correct == false {
+                self.currentIndex = 0
+            }
+        }
+    }
     
     private var menuScrollView: UIScrollView = UIScrollView()
     private var menuViewArray: [SwipePagerMenu] = []
@@ -111,14 +127,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             self.menuSize.height
         )
         
-        var currentIndex = 0
-        if let index = self.currentIndex {
-            if index < self.dataSource?.menuViews(swipePager: self).count {
-                currentIndex = index
-            }
-        }
-        
-        self.layoutMenuScrollView(currentIndex: currentIndex)
+        self.layoutMenuScrollView(currentIndex: self.currentIndex)
     }
     
     private func layoutMenuScrollView(#currentIndex: Int) {
@@ -162,24 +171,17 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             CGRectGetHeight(self.frame) - CGRectGetMinY(self.frame) - self.menuSize.height
         )
         
-        var currentIndex = 0
-        if let index = self.currentIndex {
-            if index < self.dataSource?.viewControllers(swipePager: self).count {
-                currentIndex = index
-            }
-        }
-        
         if let viewControllerArray = self.dataSource?.viewControllers(swipePager: self) {
             self.viewControllers = viewControllerArray
-        }
-        
-        if self.viewControllers.count > 0 {
-            self.pageViewController.setViewControllers(
-                [self.viewControllers[currentIndex]],
-                direction: .Forward,
-                animated: true,
-                completion: nil
-            )
+            
+            if self.viewControllers.count > 0 {
+                self.pageViewController.setViewControllers(
+                    [self.viewControllers[self.currentIndex]],
+                    direction: .Forward,
+                    animated: true,
+                    completion: nil
+                )
+            }
         }
     }
     
