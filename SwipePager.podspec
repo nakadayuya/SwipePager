@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwipePager"
-  s.version      = "1.0.3"
+  s.version      = "1.1.0"
   s.summary      = "SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI."
   s.homepage     = "https://github.com/naoto0822/SwipePager"
   s.license      = 'MIT'
