@@ -41,13 +41,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     
     // MARK: - Property
     
-    var dataSource: SwipePagerDataSource? {
-        didSet {
-            self.reloadData()
-        }
-    }
+    var dataSource: SwipePagerDataSource?
     var delegate: SwipePagerDelegate?
     var transitionStyle: UIPageViewControllerTransitionStyle!
+    var currentIndex: Int?
     
     private var menuScrollView: UIScrollView = UIScrollView()
     private var menuViewArray: [SwipePagerMenu] = []
@@ -88,7 +85,14 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             menuHeight
         )
         
-        self.layoutMenuScrollView(currentIndex: 0)
+        var currentIndex = 0
+        if let index = self.currentIndex {
+            if index < self.dataSource?.viewControllers(swipePager: self).count {
+                currentIndex = index
+            }
+        }
+        
+        self.layoutMenuScrollView(currentIndex: currentIndex)
         
         self.pageViewController.view.frame = CGRectMake(
             0,
@@ -103,7 +107,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         
         if self.viewControllers.count > 0 {
             self.pageViewController.setViewControllers(
-                [self.viewControllers[0]],
+                [self.viewControllers[currentIndex]],
                 direction: .Forward,
                 animated: true,
                 completion: nil
@@ -119,6 +123,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         self.menuScrollView.showsHorizontalScrollIndicator = true
         self.addSubview(self.menuScrollView)
         
+        self.pageViewController = UIPageViewController()
         self.pageViewController = UIPageViewController(
             transitionStyle: self.transitionStyle,
             navigationOrientation: .Horizontal,
@@ -157,7 +162,6 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
                     self.menuSize.height
                 )
                 view.config()
-                self.menuHighlight(currentIndex)
                 view.tag = index
                 view.userInteractionEnabled = true
                 let gesture = UITapGestureRecognizer(target: self, action: "didTapMenu:")
@@ -171,6 +175,8 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             self.menuSize.width * CGFloat(index),
             self.menuSize.height
         )
+        
+        self.moveMenuScrollViewToCurrentPage(currentIndex)
     }
     
     func didTapMenu(gesture: UITapGestureRecognizer) {
