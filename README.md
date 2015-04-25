@@ -31,13 +31,16 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
 
 # Usage
 
-### 1.protocol declaration (`SwipePagerDataSource`, `SwipePagerDelegate` )
+### 1. protocol declaration
+
+ ・`SwipePagerDataSource`
+ ・`SwipePagerDelegate`
 
  ```swift
  class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
  ```
 
-### 2.SwipePager initialize
+### 2. SwipePager initialize
 
  initialize and need call `reloadData()`
 
@@ -53,7 +56,7 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
  }
  ```
 
-### 3.`SwipePagerDataSource` Protocol
+### 3. `SwipePagerDataSource` Protocol
 
  ・`func sizeForMenu(#swipePager: SwipePager) -> CGSize`
 
@@ -62,6 +65,7 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
      return CGSizeMake(80, 50)
  }
  ```
+
 
  ・`func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu]`
 
@@ -88,7 +92,8 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
  }
  ```
 
-  ・`func viewControllers(#swipePager: SwipePager) -> [UIViewController]`
+
+ ・`func viewControllers(#swipePager: SwipePager) -> [UIViewController]`
 
  ```swift
  func viewControllers(#swipePager: SwipePager) -> [UIViewController] {
@@ -104,7 +109,7 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
  }
  ```
 
-### 4.`SwipePagerDelegate` Protocol
+### 4. `SwipePagerDelegate` Protocol
 
  ```swift
  func swipePager(#swipePager: SwipePager, didMoveToPage page: Int) {
