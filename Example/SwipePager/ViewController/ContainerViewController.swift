@@ -50,7 +50,7 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
         let swipePager = SwipePager(frame: frame, transitionStyle: .Scroll)
         swipePager.dataSource = self
         swipePager.delegate = self
-        swipePager.currentIndex = 7
+//        swipePager.currentIndex = 4
         self.view.addSubview(swipePager)
         swipePager.reloadData()
     }

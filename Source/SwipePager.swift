@@ -72,47 +72,8 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     // MARK: - Public
     
     func reloadData() {
-        if let menuSize = self.dataSource?.sizeForMenu(swipePager: self) {
-            self.menuSize = menuSize
-        }
-        
-        let menuHeight = self.menuSize.height
-        
-        self.menuScrollView.frame = CGRectMake(
-            0,
-            0,
-            CGRectGetWidth(self.frame),
-            menuHeight
-        )
-        
-        var currentIndex = 0
-        if let index = self.currentIndex {
-            if index < self.dataSource?.viewControllers(swipePager: self).count {
-                currentIndex = index
-            }
-        }
-        
-        self.layoutMenuScrollView(currentIndex: currentIndex)
-        
-        self.pageViewController.view.frame = CGRectMake(
-            0,
-            menuHeight,
-            CGRectGetWidth(self.frame),
-            CGRectGetHeight(self.frame) - CGRectGetMinY(self.frame) - menuHeight
-        )
-        
-        if let viewControllerArray = self.dataSource?.viewControllers(swipePager: self) {
-            self.viewControllers = viewControllerArray
-        }
-        
-        if self.viewControllers.count > 0 {
-            self.pageViewController.setViewControllers(
-                [self.viewControllers[currentIndex]],
-                direction: .Forward,
-                animated: true,
-                completion: nil
-            )
-        }
+        self.menuScrollViewReloadData()
+        self.pageViewControllerReloadData()
     }
     
     // MARK: - Private
@@ -138,13 +99,26 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         )
     }
     
-    private func indexOfViewController(viewController: UIViewController) -> Int {
-        for var i = 0; i < self.viewControllers.count; i++ {
-            if viewController == self.viewControllers[i] {
-                return i
+    private func menuScrollViewReloadData() {
+        if let menuSize = self.dataSource?.sizeForMenu(swipePager: self) {
+            self.menuSize = menuSize
+        }
+        
+        self.menuScrollView.frame = CGRectMake(
+            0,
+            0,
+            CGRectGetWidth(self.frame),
+            self.menuSize.height
+        )
+        
+        var currentIndex = 0
+        if let index = self.currentIndex {
+            if index < self.dataSource?.menuViews(swipePager: self).count {
+                currentIndex = index
             }
         }
-        return NSNotFound
+        
+        self.layoutMenuScrollView(currentIndex: currentIndex)
     }
     
     private func layoutMenuScrollView(#currentIndex: Int) {
@@ -177,6 +151,36 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         )
         
         self.moveMenuScrollViewToCurrentPage(currentIndex)
+    }
+    
+    private func pageViewControllerReloadData() {
+        
+        self.pageViewController.view.frame = CGRectMake(
+            0,
+            self.menuSize.height,
+            CGRectGetWidth(self.frame),
+            CGRectGetHeight(self.frame) - CGRectGetMinY(self.frame) - self.menuSize.height
+        )
+        
+        var currentIndex = 0
+        if let index = self.currentIndex {
+            if index < self.dataSource?.viewControllers(swipePager: self).count {
+                currentIndex = index
+            }
+        }
+        
+        if let viewControllerArray = self.dataSource?.viewControllers(swipePager: self) {
+            self.viewControllers = viewControllerArray
+        }
+        
+        if self.viewControllers.count > 0 {
+            self.pageViewController.setViewControllers(
+                [self.viewControllers[currentIndex]],
+                direction: .Forward,
+                animated: true,
+                completion: nil
+            )
+        }
     }
     
     func didTapMenu(gesture: UITapGestureRecognizer) {
@@ -221,8 +225,13 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         self.menuHighlight(index)
     }
     
-    private func didMoveToPage() {
-        self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentPage)
+    private func indexOfViewController(viewController: UIViewController) -> Int {
+        for var i = 0; i < self.viewControllers.count; i++ {
+            if viewController == self.viewControllers[i] {
+                return i
+            }
+        }
+        return NSNotFound
     }
     
     private func menuHighlight(index: Int) {
@@ -234,6 +243,10 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
                 menu.stateHighlight()
             }
         }
+    }
+    
+    private func didMoveToPage() {
+        self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentPage)
     }
     
     // MARK: - UIPageViewControllerDataSource
