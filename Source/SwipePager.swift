@@ -26,13 +26,13 @@
 
 import UIKit
 
-protocol SwipePagerDataSource {
+public protocol SwipePagerDataSource {
     func sizeForMenu(#swipePager: SwipePager) -> CGSize
     func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu]
     func viewControllers(#swipePager: SwipePager) -> [UIViewController]
 }
 
-protocol SwipePagerDelegate {
+public protocol SwipePagerDelegate {
     func swipePager(#swipePager: SwipePager, didMoveToPage page: Int)
 }
 
@@ -41,11 +41,11 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     
     // MARK: - Property
     
-    var dataSource: SwipePagerDataSource?
-    var delegate: SwipePagerDelegate?
-    var transitionStyle: UIPageViewControllerTransitionStyle!
-    var currentPage: Int = 0
-    var swipeEnabled: Bool = true
+    public var dataSource: SwipePagerDataSource?
+    public var delegate: SwipePagerDelegate?
+    public var transitionStyle: UIPageViewControllerTransitionStyle!
+    public var currentPage: Int = 0
+    public var swipeEnabled: Bool = true
     
     private var menuScrollView: UIScrollView = UIScrollView()
     private var menuViewArray: [SwipePagerMenu] = []

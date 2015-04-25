@@ -30,12 +30,12 @@ public class SwipePagerMenu: UIView {
     
     // MARK: - Property
     
-    var title: String?
-    var font: UIFont?
-    var stateNormalColor: UIColor?
-    var stateNormalFontColor: UIColor?
-    var stateHighlightColor: UIColor?
-    var stateHighlightFontColor: UIColor?
+    public var title: String?
+    public var font: UIFont?
+    public var stateNormalColor: UIColor?
+    public var stateNormalFontColor: UIColor?
+    public var stateHighlightColor: UIColor?
+    public var stateHighlightFontColor: UIColor?
     
     private var titelLabel: UILabel = UILabel()
     
