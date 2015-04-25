@@ -25,17 +25,19 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
 
 # Installation
 
+#### manual
+
 - add `SwipePager.swift` and `SwipePagerMenu.swift` in `Source/` to your project.
 
 # Usage
 
- ### 1.protocol declaration (`SwipePagerDataSource`, `SwipePagerDelegate` )
+### 1.protocol declaration (`SwipePagerDataSource`, `SwipePagerDelegate` )
 
  ```swift
  class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
  ```
 
- ### 2.SwipePager initialize
+### 2.SwipePager initialize
 
  initialize and need call `reloadData()`
 
@@ -51,7 +53,7 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
  }
  ```
 
- ### 3.`SwipePagerDataSource` Protocol
+### 3.`SwipePagerDataSource` Protocol
 
  ・`func sizeForMenu(#swipePager: SwipePager) -> CGSize`
 
@@ -102,7 +104,7 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
  }
  ```
 
- ### 4.`SwipePagerDelegate` Protocol
+### 4.`SwipePagerDelegate` Protocol
 
  ```swift
  func swipePager(#swipePager: SwipePager, didMoveToPage page: Int) {
