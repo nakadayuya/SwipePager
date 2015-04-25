@@ -45,6 +45,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     var delegate: SwipePagerDelegate?
     var transitionStyle: UIPageViewControllerTransitionStyle!
     var currentPage: Int = 0
+    var swipeEnabled: Bool = true
     
     private var menuScrollView: UIScrollView = UIScrollView()
     private var menuViewArray: [SwipePagerMenu] = []
@@ -155,6 +156,15 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             CGRectGetWidth(self.frame),
             CGRectGetHeight(self.frame) - CGRectGetMinY(self.frame) - self.menuSize.height
         )
+        
+        if self.swipeEnabled == false {
+            for v in self.pageViewController.view.subviews {
+                let view = v as UIView
+                if view.isKindOfClass(UIScrollView) {
+                    (view as UIScrollView).scrollEnabled = false
+                }
+            }
+        }
         
         if let viewControllerArray = self.dataSource?.viewControllers(swipePager: self) {
             self.viewControllers = viewControllerArray
