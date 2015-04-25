@@ -9,7 +9,7 @@
 [![Issues](https://img.shields.io/github/issues/naoto0822/SwipePager.svg?style=flat
 )](https://github.com/naoto0822/SwipePager/issues?state=open)
 
-SwipePager is UIPageViewController wrapper like Gunosy, SmartNews.
+SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
 
 <img src="Screenshots/swipepager-demo.gif"/>
 
@@ -23,19 +23,21 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews.
 - Swift 1.1
 - XCode 6.2
 
-# Install
+# Installation
 
-- add `SwipePager.swift` and `SwipePagerMenu.swift` to your project.
+- add `SwipePager.swift` and `SwipePagerMenu.swift` in `Source/` to your project.
 
 # Usage
 
- 1. protocol declaration (`SwipePagerDataSource`, `SwipePagerDelegate` )
+ ### 1. protocol declaration (`SwipePagerDataSource`, `SwipePagerDelegate` )
 
  ```swift
  class ViewController: UIViewController, SwipePagerDataSource, SwipePagerDelegate
  ```
 
- 2. SwipePager initialize
+ ### 2. SwipePager initialize
+
+ initialize and need call `reloadData()`
 
  ```swift
  override func viewDidLoad() {
@@ -45,22 +47,23 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews.
      swipePager.dataSource = self
      swipePager.delegate = self
      self.view.addSubview(swipePager)
+     swipePager.reloadData()
  }
  ```
 
- 3. DataSource
+ ### 3. `SwipePagerDataSource` Protocol
+
+ ・`func sizeForMenu(#swipePager: SwipePager) -> CGSize`
 
  ```swift
- // ex).
-
- func numberOfPage(#swipePager: SwipePager) -> Int {
-     return 3
- }
-
  func sizeForMenu(#swipePager: SwipePager) -> CGSize {
      return CGSizeMake(80, 50)
  }
+ ```
 
+ ・`func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu]`
+
+ ```swift
  func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu] {
      // use SwipePagerMenu Class
      var array: [SwipePagerMenu] = []
@@ -81,7 +84,11 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews.
 
      return array
  }
+ ```
 
+  ・`func viewControllers(#swipePager: SwipePager) -> [UIViewController]`
+
+ ```swift
  func viewControllers(#swipePager: SwipePager) -> [UIViewController] {
      var array: [UIViewController] = []
 
@@ -95,13 +102,49 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews.
  }
  ```
 
- 4. Delegate
+ ### 4. `SwipePagerDelegate` Protocol
 
  ```swift
- func swipePager(#swipePager: SwipePager, didMoveToPage: Int) {
-     println("move to \(didMoveToPage.description)")
+ func swipePager(#swipePager: SwipePager, didMoveToPage page: Int) {
+        println("move to :" + page.description)
  }
  ```
+
+# `SwipePagerMenu` Class
+
+### property
+
+・`title`: menu title.
+
+・`font`: menu font.
+
+・`stateNormalColor`: state normal menu color.
+
+・`stateNormalFontColor`: state normal font color.
+
+・`stateHighlightColor`: state highlight menu color.
+
+・`stateHighlightFontColor`: state highlight font color.
+
+# Option
+
+### currentPage
+
+can setting start page.  
+`SwipePager` Class property. (default 0)
+
+```swift
+swipePager.currentPage = 2
+```
+
+### swipeEnabled
+
+disEnabled swipe gesture.  
+`SwipePager` Class property. (default true)
+
+```swift
+swipePager.swipeEnabled = false
+```
 
 # License
 
