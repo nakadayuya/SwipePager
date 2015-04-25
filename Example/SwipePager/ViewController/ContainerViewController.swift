@@ -60,10 +60,6 @@ class ContainerViewController: UIViewController, SwipePagerDataSource, SwipePage
     
     // MARK: - SwipePagerDataSource
     
-    func numberOfPage(#swipePager: SwipePager) -> Int {
-        return 8
-    }
-    
     func sizeForMenu(#swipePager: SwipePager) -> CGSize {
         return CGSizeMake(80, 50)
     }

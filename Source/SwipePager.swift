@@ -27,7 +27,6 @@
 import UIKit
 
 protocol SwipePagerDataSource {
-    func numberOfPage(#swipePager: SwipePager) -> Int
     func sizeForMenu(#swipePager: SwipePager) -> CGSize
     func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu]
     func viewControllers(#swipePager: SwipePager) -> [UIViewController]

@@ -37,13 +37,18 @@ class SwipePagerMenu: UIView {
     var stateHighlightColor: UIColor?
     var stateHighlightFontColor: UIColor?
     
+    private var titelLabel: UILabel = UILabel()
+    
     override var frame: CGRect {
         didSet {
-            self.titelLabel.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))
+            self.titelLabel.frame = CGRectMake(
+                0,
+                0,
+                CGRectGetWidth(self.frame),
+                CGRectGetHeight(self.frame)
+            )
         }
     }
-    
-    private var titelLabel: UILabel = UILabel()
     
     // MARK: - LifeCycle
     
