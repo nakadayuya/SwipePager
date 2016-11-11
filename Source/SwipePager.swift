@@ -27,17 +27,17 @@
 import UIKit
 
 public protocol SwipePagerDataSource {
-    func sizeForMenu(#swipePager: SwipePager) -> CGSize
-    func menuViews(#swipePager: SwipePager) -> [SwipePagerMenu]
-    func viewControllers(#swipePager: SwipePager) -> [UIViewController]
+    func sizeForMenu(swipePager: SwipePager) -> CGSize
+    func menuViews(swipePager: SwipePager) -> [SwipePagerMenu]
+    func viewControllers(swipePager: SwipePager) -> [UIViewController]
 }
 
 public protocol SwipePagerDelegate {
-    func swipePager(#swipePager: SwipePager, didMoveToPage page: Int)
+    func swipePager(swipePager: SwipePager, didMoveToPage page: Int)
 }
 
 public class SwipePager: UIView, UIPageViewControllerDataSource,
-                                 UIPageViewControllerDelegate {
+UIPageViewControllerDelegate {
     
     // MARK: - Property
     
@@ -51,7 +51,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     private var menuViewArray: [SwipePagerMenu] = []
     private var menuSize: CGSize = CGSizeZero
     private var currentIndex: Int = 0
-    private var pageViewController: UIPageViewController = UIPageViewController()
+    public var pageViewController: UIPageViewController = UIPageViewController()
     private var viewControllers: [UIViewController] = []
     
     // MARK: - LifeCycle
@@ -62,10 +62,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         self.initializeView()
     }
     
-    override init() {
-        super.init()
-    }
-
+    
     required public init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -102,7 +99,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     }
     
     private func menuScrollViewReloadData() {
-        if let menuSize = self.dataSource?.sizeForMenu(swipePager: self) {
+        if let menuSize = self.dataSource?.sizeForMenu(self) {
             self.menuSize = menuSize
         }
         
@@ -113,13 +110,13 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             self.menuSize.height
         )
         
-        self.layoutMenuScrollView(currentPage: self.currentPage)
+        self.layoutMenuScrollView(self.currentPage)
     }
     
-    private func layoutMenuScrollView(#currentPage: Int) {
+    private func layoutMenuScrollView(currentPage: Int) {
         var index: Int = 0
         
-        if let menuViewArray = self.dataSource?.menuViews(swipePager: self) {
+        if let menuViewArray = self.dataSource?.menuViews(self) {
             
             self.menuViewArray = menuViewArray
             
@@ -161,12 +158,12 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             for v in self.pageViewController.view.subviews {
                 let view = v as UIView
                 if view.isKindOfClass(UIScrollView) {
-                    (view as UIScrollView).scrollEnabled = false
+                    (view as! UIScrollView).scrollEnabled = false
                 }
             }
         }
         
-        if let viewControllerArray = self.dataSource?.viewControllers(swipePager: self) {
+        if let viewControllerArray = self.dataSource?.viewControllers(self) {
             self.viewControllers = viewControllerArray
             
             if self.viewControllers.count > 0 {
@@ -219,7 +216,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
             CGRectGetHeight(self.menuScrollView.frame)
         )
         self.menuScrollView.scrollRectToVisible(frame, animated: true)
-        self.menuHighlight(index: index)
+        self.menuHighlight(index)
     }
     
     private func indexOfViewController(viewController: UIViewController) -> Int {
@@ -231,7 +228,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
         return NSNotFound
     }
     
-    private func menuHighlight(#index: Int) {
+    private func menuHighlight(index: Int) {
         for var i = 0; i < self.menuViewArray.count; i++ {
             let menu = self.menuViewArray[i] as SwipePagerMenu
             menu.stateNormal()
@@ -245,11 +242,11 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     private func settingCurrentPage() {
         var correct = true
         
-        if self.currentPage >= self.dataSource?.menuViews(swipePager: self).count {
+        if self.currentPage >= self.dataSource?.menuViews(self).count {
             correct = false
         }
         
-        if self.currentPage >= self.dataSource?.viewControllers(swipePager: self).count {
+        if self.currentPage >= self.dataSource?.viewControllers(self).count {
             correct = false
         }
         
@@ -259,7 +256,7 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     }
     
     private func didMoveToPage() {
-        self.delegate?.swipePager(swipePager: self, didMoveToPage: self.currentIndex)
+        self.delegate?.swipePager(self, didMoveToPage: self.currentIndex)
     }
     
     // MARK: - UIPageViewControllerDataSource
@@ -267,63 +264,63 @@ public class SwipePager: UIView, UIPageViewControllerDataSource,
     public func pageViewController(
         pageViewController: UIPageViewController,
         viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-            
-            var index: Int = self.indexOfViewController(viewController)
-            
-            if index == NSNotFound {
-                return nil
-            }
         
-            index--
+        var index: Int = self.indexOfViewController(viewController)
         
-            if (index >= 0) && (index < self.viewControllers.count) {
-                return self.viewControllers[index]
-            }
-            
+        if index == NSNotFound {
             return nil
+        }
+        
+        index--
+        
+        if (index >= 0) && (index < self.viewControllers.count) {
+            return self.viewControllers[index]
+        }
+        
+        return nil
     }
     
     public func pageViewController(
         pageViewController: UIPageViewController,
         viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-            
-            var index: Int = self.indexOfViewController(viewController)
-            
-            if index == NSNotFound {
-                return nil
-            }
-            
-            index++
-            
-            if (index >= 0) && (index < self.viewControllers.count) {
-                return self.viewControllers[index]
-            }
-            
+        
+        var index: Int = self.indexOfViewController(viewController)
+        
+        if index == NSNotFound {
             return nil
+        }
+        
+        index++
+        
+        if (index >= 0) && (index < self.viewControllers.count) {
+            return self.viewControllers[index]
+        }
+        
+        return nil
     }
     
     // MARK: - UIPageViewControllerDelegate
     
     public func pageViewController(
         pageViewController: UIPageViewController,
-        willTransitionToViewControllers pendingViewControllers: [AnyObject]) {
-            
-            if pendingViewControllers.count > 0 {
-                let viewControllers = pendingViewControllers as [UIViewController]
-                let viewController = viewControllers[0] as UIViewController
-                self.currentIndex = self.indexOfViewController(viewController)
-            }
+        willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+        
+        if pendingViewControllers.count > 0 {
+            let viewControllers = pendingViewControllers as! [UIViewController]
+            let viewController = viewControllers[0] as UIViewController
+            self.currentIndex = self.indexOfViewController(viewController)
+        }
     }
     
     public func pageViewController(
         pageViewController: UIPageViewController,
         didFinishAnimating finished: Bool,
-        previousViewControllers: [AnyObject],
-        transitionCompleted completed: Bool) {
-            if completed == true {
-                self.moveMenuScrollViewToCurrentIndex(self.currentIndex)
-                self.didMoveToPage()
-            }
+                           previousViewControllers: [UIViewController],
+                           transitionCompleted completed: Bool) {
+        if completed == true {
+            self.moveMenuScrollViewToCurrentIndex(self.currentIndex)
+            self.didMoveToPage()
+        }
     }
     
 }
