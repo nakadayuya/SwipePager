@@ -52,7 +52,7 @@ public class SwipePagerMenu: UIView {
     
     // MARK: - LifeCycle
     
-    override required public init() {
+    required public init() {
         super.init(frame: CGRectZero)
         self.titelLabel = UILabel()
         self.titelLabel.backgroundColor = UIColor.clearColor()
