@@ -15,13 +15,13 @@ SwipePager is UIPageViewController wrapper like Gunosy, SmartNews UI.
 
 # Version
 
-- current vesion 1.1.0
+- current vesion 1.1.1
 
 # Requirements
 
 - iOS8 and up
-- Swift 1.1
-- Xcode 6.2
+- Swift 2.3
+- Xcode 7.x
 
 # Installation
 
